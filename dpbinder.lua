@@ -49,7 +49,7 @@ function main()
 	sampRegisterChatCommand("dpb_binder", cmd_binder) -- регистрация команды
 
 	-- логи о запуске
-	sampAddChatMessage(u8:decode("{5A90CE}" .. tag .. " - DPBinder {d5dedd}успешно загружен. | {5A90CE}Версия: {d5dedd}" .. version_value .. "| {5A90CE}Автор: {d5dedd}dikayapanda"), main_color)
+	sampAddChatMessage(u8:decode("{5A90CE}" .. tag .. " - DPBinder {d5dedd}успешно загружен. | {5A90CE}Версия: {d5dedd}" .. version_value .. " | {5A90CE}Автор: {d5dedd}dikayapanda"), main_color)
 	sampAddChatMessage(u8:decode("{5A90CE}" .. tag .. " - Для получения помощи используйте: {d5dedd}/dpb_help"), main_color)
 	print("Успешный запуск скрипта.")
 
