@@ -34,11 +34,19 @@ if enable_autoupdate then
     end
 end
 
+local dialogArr = {"Закурить сигарету (на улице)", "Выкинуть и потушить сигарету (на улице)", "Закурить сигарету в помещении (стоя) {ffff00}Не готово", "Выкинуть и потушить сигарету в помещении (стоя) {ffff00}Не готово", "Закурить сигарету в помещении (сидя) {ffff00}Не готово", "Выкинуть и потушить сигарету в помещении (сидя с пепельницей) {ffff00}Не готово"}
+local dialogStr = ""
+
+for _, str in ipairs(dialogArr) do
+	dialogStr = dialogStr .. str .. "\n"
+end
+
 function main()
 	if not isSampLoaded() or not isSampfuncsLoaded() then return end
 	while not isSampAvailable() do wait(100) end
 
 	sampRegisterChatCommand("dpb_version", cmd_version) -- регистрация команды
+	sampRegisterChatCommand("dpb_binder", cmd_binder) -- регистрация команды
 
 	-- логи о запуске
 	sampAddChatMessage(u8:decode("{5A90CE}" .. tag .. " - DPBinder {d5dedd}успешно загружен. | {5A90CE}Версия: {d5dedd}" .. version_value .. "| {5A90CE}Автор: {d5dedd}dikayapanda"), main_color)
@@ -54,9 +62,44 @@ function main()
 
 	while true do
 		wait(0)
+
+		local result, button, list, input = sampHasDialogRespond(1024)
+		if result then
+			if button == 1 then 
+				if list == 0 then
+					sampSendChat("/do Пачка сигарет и зажигалка в правом кармане.")
+					wait(3000)
+					sampSendChat("/me засунул руку в карман, после чего вытаскивает пачку сигарет.")
+					wait(3500)
+					sampSendChat("/do Тревор стоит на улице, сжимая в руке пачку сигарет.")
+					wait(3000)
+					sampSendChat("/me открыл пачку сигарет и достал сигарету, взял в рот сигарету, и закрыл пачку сигарет.")
+					wait(4500)
+					sampSendChat("/me достал из кармана фирменную зажигалку \"Henderson\" и подставил её к сигарете, зажимая кнопку поджига.")
+					wait(1500)
+					sampSendChat("/do Сигарета прикурена.")
+					wait(2000)
+					sampSendChat("/me убрал пачку сигарет и зажигалку в карман.")
+					wait(3000)
+					sampSendChat("/me глубоко вдыхает и медленно выпускает дым в воздух.")
+					wait(3000)
+				end
+				if list == 1 then
+					sampSendChat("/me выходит из задумчивости и оглядывается на улицу, сморщившись от густого дыма, окутывающего его лицо.")
+					wait(2500)
+					sampSendChat("/me осторожно выбрасывает окурок на землю и топчет его, чтобы убедиться, что огонь погас. ")
+					wait(2000)
+					sampSendChat("/do В округе чувствуется запах табачного дыма.")
+				end
+			end
+		end
 	end
 end
 
 function cmd_version()
 	sampAddChatMessage(u8:decode("{5A90CE}" .. tag .. " - Версия скрипта: {d5dedd}" .. version_value), main_color)
+end
+
+function cmd_binder() 
+	sampShowDialog(1024, u8:decode("{5A90CE}Биндер - DPBinder"), u8:decode(dialogStr), u8:decode("Выбрать"), u8:decode("Закрыть"), 2)
 end
