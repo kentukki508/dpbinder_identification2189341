@@ -1,6 +1,7 @@
 script_name("DPBinder") -- название скрипта
 script_author("dikayapanda") -- автор скрипта
-script_version("1.0") -- версия скрипта
+version_value = "1.0"
+script_version(version_value) -- версия скрипта
 script_description[[
 Биндер SA:MP
 ]] -- описание скрипта
@@ -26,9 +27,36 @@ if enable_autoupdate then
     if updater_loaded then
         autoupdate_loaded, Update = pcall(Updater)
         if autoupdate_loaded then
-            Update.json_url = "https://raw.githubusercontent.com/winsdens/languagehelper_samp/main/autoupdate/versioninfo.json?" .. tostring(os.clock())
+            Update.json_url = "https://raw.githubusercontent.com/kentukki508/dpbinder_identification2189341/main/autoupdate/versioninfo.json?" .. tostring(os.clock())
             Update.prefix = "[" .. string.upper(thisScript().name) .. "]: "
             Update.url = "https://github.com/kentukki508/dpbinder_identification2189341"
         end
     end
+end
+
+function main()
+	if not isSampLoaded() or not isSampfuncsLoaded() then return end
+	while not isSampAvailable() do wait(100) end
+
+	sampRegisterChatCommand("dpb_version", cmd_version) -- регистрация команды
+
+	-- логи о запуске
+	sampAddChatMessage(u8:decode("{5A90CE}" .. tag .. " - DPBinder {d5dedd}успешно загружен. | {5A90CE}Версия: {d5dedd}" .. version_value .. "| {5A90CE}Автор: {d5dedd}dikayapanda"), main_color)
+	sampAddChatMessage(u8:decode("{5A90CE}" .. tag .. " - Для получения помощи используйте: {d5dedd}/dpb_help"), main_color)
+	print("Успешный запуск скрипта.")
+
+	_, id = sampGetPlayerIdByCharHandle(PLAYER_PED) -- регистрация id игрока
+	nick = sampGetPlayerNickname(id) -- вычисление ника по айди
+
+	if autoupdate_loaded and enable_autoupdate and Update then
+        pcall(Update.check, Update.json_url, Update.prefix, Update.url)
+    end
+
+	while true do
+		wait(0)
+	end
+end
+
+function cmd_version()
+	sampAddChatMessage(u8:decode("{5A90CE}" .. tag .. " - Версия скрипта: {d5dedd}" .. version_value), main_color)
 end
