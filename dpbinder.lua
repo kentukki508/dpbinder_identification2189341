@@ -12,11 +12,15 @@ local imgui = require 'imgui'
 local encoding = require 'encoding'
 local sampev = require 'lib.samp.events'
 encoding.default = 'CP1251'
+local inicfg = require 'inicfg'
 u8 = encoding.UTF8
 cp1251 = encoding.CP1251
 
 local tag = "[DPBinder]"
 local main_color = 0x5A90CE
+
+local directIni = "moonloader\\DPBinder\\dpb_binder.ini"
+local mainIni = inicfg.load(nil, directIni)
 
 -- https://github.com/winsdens/languagehelper_samp
 local enable_autoupdate = true -- false, чтобы отключить автоматическое обновление + отключить отправку начальной телеметрии (сервер, версия лунного загрузчика, версия скрипта, никнейм сампа, серийный номер виртуального тома)
@@ -45,6 +49,8 @@ function main()
 	if not isSampLoaded() or not isSampfuncsLoaded() then return end
 	while not isSampAvailable() do wait(100) end
 
+	sampRegisterChatCommand("dpb_reload", cmd_reloadscript) -- регистрация команды
+	sampRegisterChatCommand("dpb_help", cmd_help) -- регистрация команды
 	sampRegisterChatCommand("dpb_version", cmd_version) -- регистрация команды
 	sampRegisterChatCommand("dpb_binder", cmd_binder) -- регистрация команды
 
@@ -65,13 +71,20 @@ function main()
 
 		local result, button, list, input = sampHasDialogRespond(1024)
 		if result then
+			--mainIni = inicfg.load(nil, directIni)
+
+			--mainIni.config.AutorunMainWindow = 1
+			--if inicfg.save(mainIni, directIni) then
+			--	sampAddChatMessage(u8:decode("сохранено"), -1)
+			--end
+
 			if button == 1 then 
 				if list == 0 then -- на улице 0
 					sampSendChat(u8:decode("/do Пачка сигарет и зажигалка в правом кармане."))
 					wait(3000)
 					sampSendChat(u8:decode("/me засунул руку в карман, после чего вытаскивает пачку сигарет."))
 					wait(4500)
-					sampSendChat(u8:decode("/do Тревор стоит на улице, сжимая в руке пачку сигарет."))
+					sampSendChat(u8:decode("/do " ..  mainIni.config.nameNominativeCase .. " стоит на улице, сжимая в руке пачку сигарет."))
 					wait(3000)
 					sampSendChat(u8:decode("/me открыл пачку сигарет и достал сигарету, взял в рот сигарету, и закрыл пачку сигарет."))
 					wait(5000)
@@ -86,7 +99,7 @@ function main()
 				if list == 1 then -- на улице 1
 					sampSendChat(u8:decode("/me выходит из задумчивости и оглядывается на улицу, сморщившись от густого дыма, окутывающего его лицо."))
 					wait(4500)
-					sampSendChat(u8:decode("/me осторожно выбрасывает окурок на землю и топчет его, чтобы убедиться, что огонь погас. "))
+					sampSendChat(u8:decode("/me осторожно выбрасывает окурок на землю и топчет его, чтобы убедиться, что огонь погас."))
 					wait(3000)
 					sampSendChat(u8:decode("/do В округе чувствуется запах табачного дыма."))
 				end
@@ -97,7 +110,8 @@ function main()
 				if list == 4 then -- сидя в помещении 1 
 					sampSendChat(u8:decode("/me сидит в кресле, достает пачку сигарет и зажигалку из правого кармана.")) 
 					wait(3500) 
-					sampSendChat(u8:decode("/do В руке у Тревора находится пачка сигарет.")) 
+					mainIni = inicfg.load(nil, directIni)
+					sampSendChat(u8:decode("/do В руке у " .. mainIni.config.nameGenitiveCase .. " находится пачка сигарет.")) 
 					wait(3000) 
 					sampSendChat(u8:decode("/me открывает пачку сигарет и берет одну, кладет ее в рот, а затем закрывает пачку.")) 
 					wait(4000) 
@@ -123,10 +137,19 @@ function main()
 	end
 end
 
+function cmd_reloadscript(arg)
+	sampAddChatMessage(u8:decode("{5A90CE}" .. tag .. " - {d5dedd}Перезагружаем скрипт..."), main_color)
+	thisScript():reload()
+end
+
+function cmd_help() 
+	sampShowDialog(1025, u8:decode("{5A90CE}Помощь — DPBinder"), u8:decode("{5A90CE}Команды биндера:\n{5A90CE}/dpb_help - {d5dedd}получить меню помощи\n{5A90CE}/dpb_version - {d5dedd}получить информацию о версии\n{5A90CE}/dpb_binder - {d5dedd}получить меню биндера\n{5A90CE}/dpb_reload - {d5dedd}перезагрузить скрипт"), u8:decode("Выбрать"), u8:decode("Закрыть"), 0)
+end
+
 function cmd_version()
 	sampAddChatMessage(u8:decode("{5A90CE}" .. tag .. " - Версия скрипта: {d5dedd}" .. version_value), main_color)
 end
 
 function cmd_binder() 
-	sampShowDialog(1024, u8:decode("{5A90CE}Биндер - DPBinder"), u8:decode(dialogStr), u8:decode("Выбрать"), u8:decode("Закрыть"), 2)
+	sampShowDialog(1024, u8:decode("{5A90CE}Биндер — DPBinder"), u8:decode(dialogStr), u8:decode("Выбрать"), u8:decode("Закрыть"), 2)
 end
