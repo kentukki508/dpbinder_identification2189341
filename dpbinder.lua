@@ -156,6 +156,17 @@ function main()
 				end
 			end
 		end
+
+		local result, button, list, input = sampHasDialogRespond(1026)
+		if result then
+			if button == 1 then 
+				if list == 0 then 
+					sampAddChatMessage(u8:decode("{5A90CE}" .. tag .. " - {d5dedd}Эта информация временно недоступна."), main_color)
+				end
+			end
+		end
+
+
 	end
 end
 
