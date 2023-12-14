@@ -139,9 +139,19 @@ function main()
 				end
 
 				if list == 6 then 
-					sampSendChat(u8:decode("/do На лице" .. mainIni.mainIni.config.nameGenitiveCase .. " можно заметить черную маску-респиратор, которая плотно облегает его контуры.")) 
+					mainIni = inicfg.load(nil, directIni)
+					sampSendChat(u8:decode("/do На лице " .. mainIni.config.nameGenitiveCase .. " можно заметить черную маску-респиратор, которая...")) 
+					wait(1500)
+					sampSendChat(u8:decode("/do ... плотно облегает его контуры."))
 					wait(5500) 
-					sampSendChat(u8:decode("/do " .. mainIni.config.nameNominativeCase .. " выглядит немного загадочно, так как маска скрывает его выражение лица, но при этом добавляет некоторую привлекательность.")) 
+					sampSendChat(u8:decode("/do " .. mainIni.config.nameNominativeCase .. " выглядит немного загадочно, так как маска скрывает его ..."))
+					wait(3500) 
+					sampSendChat(u8:decode("/do ... выражение лица, но при этом добавляет некоторую привлекательность. "))
+					wait(3500) 
+					sampSendChat(u8:decode("/do За одеждой Тревора находятся баллоны с газовым обезболивающим препаратом."))
+					wait(4500) 
+					sampSendChat(u8:decode("/do Газ блокирует передачу сигналов боли в мозг."))
+					
 				end
 			end
 		end
