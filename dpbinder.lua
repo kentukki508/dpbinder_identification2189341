@@ -71,7 +71,7 @@ function main()
 	while true do
 		wait(0)
 
-		local result, button, list, input = sampHasDialogRespond(1024)
+		local result, button, list, input = sampHasDialogRespond(1024) -- /dpb_binder
 		if result then
 			--mainIni = inicfg.load(nil, directIni)
 
@@ -157,7 +157,7 @@ function main()
 			end
 		end
 
-		local result, button, list, input = sampHasDialogRespond(1026)
+		local result, button, list, input = sampHasDialogRespond(1026) -- /dpb_rpdi
 		if result then
 			if button == 1 then 
 				if list == 0 then 
