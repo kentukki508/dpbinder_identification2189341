@@ -54,6 +54,7 @@ function main()
 	sampRegisterChatCommand("dpb_version", cmd_version) -- регистрация команды
 	sampRegisterChatCommand("dpb_binder", cmd_binder) -- регистрация команды
 	sampRegisterChatCommand("dpb_getclist", cmd_getclist) -- регистрация команды
+	sampRegisterChatCommand("dpb_rpdi", cmd_rpdinfo) -- регистрация команды
 
 	-- логи о запуске
 	sampAddChatMessage(u8:decode("{5A90CE}" .. tag .. " - DPBinder {d5dedd}успешно загружен. | {5A90CE}Версия: {d5dedd}" .. version_value .. " | {5A90CE}Автор: {d5dedd}dikayapanda"), main_color)
@@ -173,6 +174,10 @@ end
 
 function cmd_binder() 
 	sampShowDialog(1024, u8:decode("{5A90CE}Биндер — DPBinder"), u8:decode(dialogStr), u8:decode("Выбрать"), u8:decode("Закрыть"), 2)
+end
+
+function cmd_rpdinfo() 
+	sampShowDialog(1026, u8:decode("{5A90CE}Информационное меню (RP) — DPBinder"), u8:decode("Маска-респиратор с газовым обезболивающим {ff0000}Не готово"), u8:decode("Выбрать"), u8:decode("Закрыть"), 2)
 end
 
 function cmd_getclist(arg)
