@@ -53,6 +53,7 @@ function main()
 	sampRegisterChatCommand("dpb_help", cmd_help) -- регистрация команды
 	sampRegisterChatCommand("dpb_version", cmd_version) -- регистрация команды
 	sampRegisterChatCommand("dpb_binder", cmd_binder) -- регистрация команды
+	sampRegisterChatCommand("dpb_getclist", cmd_getclist) -- регистрация команды
 
 	-- логи о запуске
 	sampAddChatMessage(u8:decode("{5A90CE}" .. tag .. " - DPBinder {d5dedd}успешно загружен. | {5A90CE}Версия: {d5dedd}" .. version_value .. " | {5A90CE}Автор: {d5dedd}dikayapanda"), main_color)
@@ -85,11 +86,11 @@ function main()
 					sampSendChat(u8:decode("/me засунул руку в карман, после чего вытаскивает пачку сигарет."))
 					wait(4500)
 					sampSendChat(u8:decode("/do " ..  mainIni.config.nameNominativeCase .. " стоит на улице, сжимая в руке пачку сигарет."))
-					wait(3000)
+					wait(4000)
 					sampSendChat(u8:decode("/me открыл пачку сигарет и достал сигарету, взял в рот сигарету, и закрыл пачку сигарет."))
-					wait(5000)
+					wait(7000)
 					sampSendChat(u8:decode("/me достал из кармана фирменную зажигалку \"Henderson\" и подставил её к сигарете, зажимая кнопку поджига."))
-					wait(1500)
+					wait(3500)
 					sampSendChat(u8:decode("/do Сигарета прикурена."))
 					wait(2000)
 					sampSendChat(u8:decode("/me убрал пачку сигарет и зажигалку в карман."))
@@ -98,36 +99,40 @@ function main()
 				end
 				if list == 1 then -- на улице 1
 					sampSendChat(u8:decode("/me выходит из задумчивости и оглядывается на улицу, сморщившись от густого дыма, окутывающего его лицо."))
-					wait(4500)
+					wait(7500)
 					sampSendChat(u8:decode("/me осторожно выбрасывает окурок на землю и топчет его, чтобы убедиться, что огонь погас."))
 					wait(3000)
 					sampSendChat(u8:decode("/do В округе чувствуется запах табачного дыма."))
 				end
 
-				if list == 2 then end -- стоя в помещении 1
-				if list == 3 then end -- стоя в помещении 2
+				if list == 2 then -- стоя в помещении 1
+					sampAddChatMessage(u8:decode("{5A90CE}" .. tag .. " - {d5dedd}Эта отыгровка временно недоступна."), main_color)
+				end 
+				if list == 3 then -- стоя в помещении 2
+					sampAddChatMessage(u8:decode("{5A90CE}" .. tag .. " - {d5dedd}Эта отыгровка временно недоступна."), main_color)
+				end 
 
 				if list == 4 then -- сидя в помещении 1 
 					sampSendChat(u8:decode("/me сидит в кресле, достает пачку сигарет и зажигалку из правого кармана.")) 
-					wait(3500) 
+					wait(4500) 
 					mainIni = inicfg.load(nil, directIni)
 					sampSendChat(u8:decode("/do В руке у " .. mainIni.config.nameGenitiveCase .. " находится пачка сигарет.")) 
 					wait(3000) 
 					sampSendChat(u8:decode("/me открывает пачку сигарет и берет одну, кладет ее в рот, а затем закрывает пачку.")) 
-					wait(4000) 
+					wait(7000) 
 					sampSendChat(u8:decode("/me вынимает фирменную зажигалку \"Henderson\" из кармана и подносит ее к сигарете, нажимая кнопку поджига.")) 
-					wait(1500) 
+					wait(2500) 
 					sampSendChat(u8:decode("/do Сигарета прикурена.")) 
 					wait(2000) 
 					sampSendChat(u8:decode("/me возвращает зажигалку в карман.")) 
 					wait(5000) 
 					sampSendChat(u8:decode("/me глубоко вдыхает и медленно выпускает дым в помещение."))
-					sampAddChatMessage(u8:decode("{5A90CE}" .. tag .. "{d5dedd}Здесь можно бросить пачку сигарет на стол, либо убрать в карман."), main_color)
+					sampAddChatMessage(u8:decode("{5A90CE}" .. tag .. " - {d5dedd}Здесь можно бросить пачку сигарет на стол, либо убрать в карман."), main_color)
 				end
 
 				if list == 5 then -- сидя в помещении с пепельницей 2
 					sampSendChat(u8:decode("/me перестает задумываться и оглядывается по сторонам, сморщившись от густого дыма, наполняющего комнату.")) 
-					wait(4500) 
+					wait(5500) 
 					sampSendChat(u8:decode("/me тянется к пепельнице, давит её сигаретой, чтобы убедиться, что огонь погас.")) 
 					wait(4000) 
 					sampSendChat(u8:decode("/do В помещении чувствуется запах табачного дыма. Сигарета остаётся в пепельнице."))
@@ -152,4 +157,16 @@ end
 
 function cmd_binder() 
 	sampShowDialog(1024, u8:decode("{5A90CE}Биндер — DPBinder"), u8:decode(dialogStr), u8:decode("Выбрать"), u8:decode("Закрыть"), 2)
+end
+
+function cmd_getclist(arg)
+	if arg == "" then 
+		sampAddChatMessage(u8:decode("{5A90CE}" .. tag .. " - Используйте команду: {d5dedd}/getclist (id)"), main_color)
+	else
+		player_nick = sampGetPlayerNickname(arg)
+
+		local color = sampGetPlayerColor(arg)
+		sampAddChatMessage(player_nick, color)
+		--sampAddChatMessage(color, 0xFFFFFF)
+	end
 end
