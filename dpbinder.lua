@@ -195,7 +195,7 @@ function cmd_reloadscript(arg)
 end
 
 function cmd_help() 
-	sampShowDialog(1025, u8:decode("{5A90CE}Помощь — DPBinder"), u8:decode("{5A90CE}Команды биндера:\n{5A90CE}/dpb_help - {d5dedd}получить меню помощи\n{5A90CE}/dpb_version - {d5dedd}получить информацию о версии\n{5A90CE}/dpb_binder - {d5dedd}получить меню биндера\n{5A90CE}/dpb_reload - {d5dedd}перезагрузить скрипт"), u8:decode("Выбрать"), u8:decode("Закрыть"), 0)
+	sampShowDialog(1025, u8:decode("{5A90CE}Помощь — DPBinder"), u8:decode("{5A90CE}Команды биндера:\n{5A90CE}/dpb_help - {d5dedd}получить меню помощи\n{5A90CE}/dpb_version - {d5dedd}получить информацию о версии\n{5A90CE}/dpb_binder - {d5dedd}получить меню биндера\n{5A90CE}/dpb_reload - {d5dedd}перезагрузить скрипт\n{5A90CE}/dpb_rpdi - {d5dedd}получить информационное RP-меню\n{5A90CE}/dpb_getclist - {d5dedd}получить клист пользователя по id"), u8:decode("Выбрать"), u8:decode("Закрыть"), 0)
 end
 
 function cmd_version()
