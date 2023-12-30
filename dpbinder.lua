@@ -55,6 +55,7 @@ function main()
 	sampRegisterChatCommand("dpb_binder", cmd_binder) -- регистрация команды
 	sampRegisterChatCommand("dpb_getclist", cmd_getclist) -- регистрация команды
 	sampRegisterChatCommand("dpb_rpdi", cmd_rpdinfo) -- регистрация команды
+	sampRegisterChatCommand("dpb_scriptmes", cmd_scriptmes) -- регистрация команды
 
 	-- логи о запуске
 	sampAddChatMessage(u8:decode("{5A90CE}" .. tag .. " - DPBinder {d5dedd}успешно загружен. | {5A90CE}Версия: {d5dedd}" .. version_value .. " | {5A90CE}Автор: {d5dedd}dikayapanda"), main_color)
@@ -247,5 +248,13 @@ function cmd_getclist(arg)
 		local color = sampGetPlayerColor(arg)
 		sampAddChatMessage(player_nick, color)
 		--sampAddChatMessage(color, 0xFFFFFF)
+	end
+end
+
+function cmd_scriptmes(arg) 
+	if arg == "" then
+		sampAddChatMessage(u8:decode("{5A90CE}" .. tag .. " - Используйте команду: {d5dedd}/scriptmes (Сообщение)"), main_color)
+	else
+		sampAddChatMessage("{5A90CE}" .. u8:decode("[Уведомление от DPBinder]") .. " - {d5dedd}" .. arg, main_color)
 	end
 end
